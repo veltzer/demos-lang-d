@@ -12,7 +12,7 @@ all: $(EXES) $(ALL_DEP)
 	@true
 
 $(EXES): %.exe: %.d $(ALL_DEP)
-	ldc2 $(FLAGS) $< -of=$@
+	@ldc2 $(FLAGS) $< -of=$@
 
 .PHONY: clean
 clean:
