@@ -5,6 +5,8 @@
 DO_ALLDEP:=1
 # do you want to install tools?
 DO_TOOLS:=1
+# do you want to show the commands executed ?
+DO_MKDBG?=0
 
 ########
 # code #
@@ -12,12 +14,21 @@ DO_TOOLS:=1
 ALL:=
 TOOLS=tools.stamp
 
+# silent stuff
+ifeq ($(DO_MKDBG),1)
+Q:=
+# we are not silent in this branch
+else # DO_MKDBG
+Q:=@
+#.SILENT:
+endif # DO_MKDBG
+
 ifeq ($(DO_ALLDEP),1)
 .EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
 endif # DO_ALLDEP
 
 ifeq ($(DO_TOOLS),1)
-.EXTRA_PREREQS+=$(TOOLS)
+ALL+=$(TOOLS)
 endif # DO_TOOLS
 
 SRC:=src
@@ -35,15 +46,15 @@ ALL+=$(EXES)
 all: $(ALL)
 	@true
 $(TOOLS): packages.txt
-	@xargs -a packages.txt sudo apt-get install
-	@touch $(TOOLS)
+	$(Q)xargs -a packages.txt sudo apt-get install
+	$(Q)touch $(TOOLS)
 
 .PHONY: clean
 clean:
-	@rm -f $(TOOLS) $(EXES) $(OBJECTS)
+	$(Q)rm -f $(TOOLS) $(EXES) $(OBJECTS)
 .PHONY: clean_hard
 clean_hard:
-	@git clean -qffxd
+	$(Q)git clean -qffxd
 .PHONY: debug
 debug:
 	$(info SOURCES is $(SOURCES))
@@ -54,4 +65,4 @@ debug:
 # patterns #
 ############
 $(EXES): %.exe: %.d
-	@ldc2 $(FLAGS) $< -of=$@
+	$(Q)ldc2 $(FLAGS) $< -of=$@
