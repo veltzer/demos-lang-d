@@ -46,7 +46,7 @@ ALL+=$(EXES)
 all: $(ALL)
 	@true
 $(TOOLS): packages.txt config/deps.py
-	$(Q)xargs -a packages.txt sudo apt-get install
+	$(Q)xargs -a packages.txt sudo apt-get -y install
 	$(Q)touch $(TOOLS)
 
 .PHONY: clean
