@@ -45,7 +45,7 @@ ALL+=$(EXES)
 .PHONY: all
 all: $(ALL)
 	@true
-$(TOOLS): packages.txt
+$(TOOLS): packages.txt config/deps.py
 	$(Q)xargs -a packages.txt sudo apt-get install
 	$(Q)touch $(TOOLS)
 
