@@ -3,8 +3,6 @@
 ##########
 # do you want dependency on the Makefile itself ?
 DO_ALLDEP:=1
-# do you want to install tools?
-DO_TOOLS:=1
 # do you want to show the commands executed ?
 DO_MKDBG?=0
 
@@ -12,7 +10,6 @@ DO_MKDBG?=0
 # code #
 ########
 ALL:=
-TOOLS=tools.stamp
 
 # silent stuff
 ifeq ($(DO_MKDBG),1)
@@ -26,10 +23,6 @@ endif # DO_MKDBG
 ifeq ($(DO_ALLDEP),1)
 .EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
 endif # DO_ALLDEP
-
-ifeq ($(DO_TOOLS),1)
-ALL+=$(TOOLS)
-endif # DO_TOOLS
 
 SRC:=src
 SOURCES:=$(shell find $(SRC) -name "*.d" -and -type f)
@@ -45,13 +38,10 @@ ALL+=$(EXES)
 .PHONY: all
 all: $(ALL)
 	@true
-$(TOOLS): packages.txt config/deps.py
-	$(Q)xargs -a packages.txt sudo apt-get -y install
-	$(Q)touch $(TOOLS)
 
 .PHONY: clean
 clean:
-	$(Q)rm -f $(TOOLS) $(EXES) $(OBJECTS)
+	$(Q)rm -f $(EXES) $(OBJECTS)
 .PHONY: clean_hard
 clean_hard:
 	$(Q)git clean -qffxd
