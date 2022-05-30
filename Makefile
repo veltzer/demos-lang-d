@@ -27,7 +27,7 @@ endif # DO_ALLDEP
 SRC:=src
 SOURCES:=$(shell find $(SRC) -name "*.d" -and -type f)
 OBJECTS:=$(addsuffix .o, $(basename $(SOURCES)))
-EXES:=$(addsuffix .exe, $(basename $(SOURCES)))
+EXES:=$(addsuffix .elf, $(basename $(SOURCES)))
 # -O3: high optimization
 FLAGS:=-O3
 ALL+=$(EXES)
@@ -54,5 +54,5 @@ debug:
 ############
 # patterns #
 ############
-$(EXES): %.exe: %.d
+$(EXES): %.elf: %.d
 	$(Q)ldc2 $(FLAGS) $< -of=$@
