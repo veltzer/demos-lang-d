@@ -1,10 +1,10 @@
 ##########
 # params #
 ##########
-# do you want dependency on the Makefile itself ?
-DO_ALLDEP:=1
 # do you want to show the commands executed ?
 DO_MKDBG?=0
+# do you want dependency on the Makefile itself ?
+DO_ALLDEP:=1
 
 ########
 # code #
@@ -19,10 +19,6 @@ else # DO_MKDBG
 Q:=@
 #.SILENT:
 endif # DO_MKDBG
-
-ifeq ($(DO_ALLDEP),1)
-.EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
-endif # DO_ALLDEP
 
 SRC:=src
 SOURCES:=$(shell find $(SRC) -name "*.d" -and -type f)
@@ -56,3 +52,10 @@ debug:
 ############
 $(EXES): %.elf: %.d
 	$(Q)ldc2 $(FLAGS) $< -of=$@
+
+##########
+# alldep #
+##########
+ifeq ($(DO_ALLDEP),1)
+.EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
+endif # DO_ALLDEP
