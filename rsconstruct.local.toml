@@ -1,1 +1,18 @@
 # Repo-specific overlay. Deep-merged over the canonical rsconstruct.toml.
+
+# The Makefile compiled each src/**/*.d with `ldc2 -O3 x.d -of=x.elf`. The
+# generator drives scripts/ldc2_build.py, which runs the same compile and sends
+# the .o intermediate to the output dir (-od) rather than the source tree.
+[processor.generator.d]
+command = "scripts/ldc2_build.py"
+src_dirs = ["src"]
+src_extensions = [".d"]
+output_dir = "out"
+output_extension = "elf"
+batch = false
+
+# ldc2 (the LLVM D compiler) builds the demos.
+[dependencies]
+system = [
+    "ldc",
+]
