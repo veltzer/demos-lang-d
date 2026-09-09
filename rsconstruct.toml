@@ -1,5 +1,9 @@
 # rsconstruct build configuration for this repository.
 
+[build]
+# src_dirs entries name directories; "." (the whole tree) is a config error
+reject_dot_src_dirs = true
+
 [analyzer.python]
 
 [processor.ruff]
@@ -12,7 +16,7 @@ src_dirs = ["src", "scripts"]
 src_dirs = ["src", "scripts"]
 
 [processor.taplo]
-src_dirs = ["."]
+src_files = [".rumdl.toml", "pyproject.toml", "rsconstruct.toml"]
 
 # The Makefile compiled each src/**/*.d with `ldc2 -O3 x.d -of=x.elf`. The
 # generator drives scripts/ldc2_build.py, which runs the same compile and sends
