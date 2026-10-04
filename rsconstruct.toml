@@ -6,20 +6,20 @@ reject_dot_src_dirs = true
 
 [analyzer.python]
 
-[processor.ruff]
+[processor.checker.ruff]
 src_dirs = ["src", "scripts"]
 
 
-[processor.mypy]
+[processor.checker.mypy]
 src_dirs = ["src", "scripts"]
 
-[processor.taplo]
+[processor.checker.taplo]
 src_files = [".rumdl.toml", "pyproject.toml", "rsconstruct.toml"]
 
 # The Makefile compiled each src/**/*.d with `ldc2 -O3 x.d -of=x.elf`. The
 # generator drives scripts/ldc2_build.py, which runs the same compile and sends
 # the .o intermediate to the output dir (-od) rather than the source tree.
-[processor.generator.d]
+[processor.generator.generic.d]
 command = "scripts/ldc2_build.py"
 src_dirs = ["src"]
 src_extensions = [".d"]
@@ -34,10 +34,10 @@ system = [
 ]
 
 # lint the GitHub Actions workflow files with actionlint
-[processor.actionlint]
+[processor.checker.actionlint]
 src_dirs = [".github/workflows"]
 
 # ─── markdown ────────────────────────────────────────────────────────────────
 
-[processor.rumdl]
+[processor.checker.rumdl]
 src_files = ["README.md"]
