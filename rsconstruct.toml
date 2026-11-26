@@ -14,7 +14,7 @@ src_dirs = ["src", "scripts"]
 src_dirs = ["src", "scripts"]
 
 [processor.checker.taplo]
-src_files = [".rumdl.toml", "pyproject.toml", "rsconstruct.toml"]
+src_files = [".ruff.toml", ".rumdl.toml", "pyproject.toml", "rsconstruct.toml"]
 
 # The Makefile compiled each src/**/*.d with `ldc2 -O3 x.d -of=x.elf`. The
 # generator drives scripts/ldc2_build.py, which runs the same compile and sends
